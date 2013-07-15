@@ -1,4 +1,6 @@
-moodle-grade_export_pwr
-=======================
+Grade Export for Power Campus
+=============
 
-Power Campus grade export for Moodle
+Update config.php with Power Campus data connection.
+Install within Moodle under grade/export/pwr/
+
