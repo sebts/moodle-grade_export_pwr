@@ -42,7 +42,7 @@ if (!empty($CFG->gradepublishing)) {
 
 $export = new grade_export_pwr($course);
 if (isset($_GET["msg"]) && $_GET["msg"] == 'Update Successful') {
-    $export->print_success($msg);
+    $export->print_success($_GET["msg"]);
 } else {
     $export->print_continue();
 }
