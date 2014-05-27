@@ -21,8 +21,6 @@ require_once 'grade_export_pwr.php';
 
 $id                = required_param('id', PARAM_INT); // course id
 $itemids           = required_param('itemids', PARAM_RAW);
-$coursetotalid     = required_param('coursetotalid', PARAM_INT);
-
 
 if (!$course = $DB->get_record('course', array('id'=>$id))) {
     print_error('nocourseid');
@@ -34,11 +32,10 @@ $context = context_course::instance($id);
 require_capability('moodle/grade:export', $context);
 require_capability('gradeexport/pwr:view', $context);
 
-
 // print all the exported data here
-$export = new grade_export_pwr($course, $itemids, $coursetotalid);
-$errmsg = $export->upload_PowerCampus();	//TSTAMP: Execute the upload to PowerCampus
+$export = new grade_export_pwr($course, $itemids);
+$export->print_grades();
 
 if (empty($errmsg)) {
-	header('Location: '.$_SERVER['HTTP_REFERER'].'&msg=Update Succesful');
+	header('Location: '.$_SERVER['HTTP_REFERER'].'&msg=Update Successful');
 }

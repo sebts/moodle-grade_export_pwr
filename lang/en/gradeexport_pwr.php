@@ -26,3 +26,4 @@
 $string['pluginname'] = 'PowerCampus Grade Export';
 $string['pwr:publish'] = 'Publish Grades to PowerCampus';
 $string['pwr:view'] = 'Use PowerCampus grade export';
+$string['export'] = 'Export';
