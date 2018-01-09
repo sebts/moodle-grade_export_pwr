@@ -57,6 +57,7 @@ function update_transcript( $arr_peoplegrades, $ubound
              . "   AND academic_term = '$acad_term'"
              . "   AND event_id      = '$event_id'"
              . "   AND section       = '$section'"
+			 . "   AND FINAL_GRADE not in ('W','WP','WF')"
              . "   AND people_id     = (SELECT pe.People_ID"
              . "                          FROM People pe LEFT JOIN"
              . "                               UserDefinedInd ud ON pe.People_ID = ud.People_ID"
