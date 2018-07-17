@@ -129,12 +129,12 @@ class grade_export_pwr extends grade_export {
             default:
                 $acad_term = 'X';
         }
-		
+        
         //Array to hold the student IDs and their grade
         $arr_peoplegrades = array('id' => array(), 'grade'=> array());
         $i = 0; //Array element subscript incrementor
 
-		
+        
         //Loop through the list of students for the course and retrieve their Final Grades
         $gui = new graded_users_iterator($this->course, $this->columns, $this->groupid);
         $gui->require_active_enrolment($this->onlyactive);
@@ -155,20 +155,9 @@ class grade_export_pwr extends grade_export {
             $i++;
         }
         $gui->close();
-		
+        
         $ubound = --$i;     //Subscript of the last element of the array
-		
-/* FOR DEBUGGING ONLY
-var_dump($arr_peoplegrades);
-echo '<br />*****<br />';
-for($i= 0; $i <= $ubound; $i++){
-    $people_id = $arr_peoplegrades[$i]['id'];
-    $final_grade = $arr_peoplegrades[$i]['grade'];
-	echo $i. ') ' . $people_id . ' - ' . $final_grade . '<br />';
-}
-// die;
-$msg = ooops($opid);
-*/
+        
 
         $msg = update_transcript( $arr_peoplegrades, $ubound
                                 , $acad_year, $acad_term, $event_id, $section
@@ -177,6 +166,6 @@ $msg = ooops($opid);
         if (!empty($msg)) {
             $this->print_foul($msg);
         }
-		return $msg;
+        return $msg;
     }   
 }

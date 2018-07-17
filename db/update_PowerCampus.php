@@ -8,31 +8,20 @@ require_once 'config.php';
 
 //Connection to the database
 function open_mydb() {
-	global $PWR;
-	
-    $db = mssql_connect($PWR->dbhost,$PWR->dbuser,$PWR->dbpass);
-    if (!$db || !mssql_select_db($PWR->dbname,$db)) {
-        die('Unable to connect to the database.');
-    } else {
+    global $PWR;
+
+    $connectionInfo = array("Database"=>$PWR->dbname, "UID"=>$PWR->dbuser, "PWD"=>$PWR->dbpass);
+    $db = sqlsrv_connect($PWR->dbhost, $connectionInfo);
+    if ($db) {
         return $db;
+    } else {
+        die('Unable to connect to the database.');
     }
 }
 
 function close_mydb($db) {
-    return mssql_close($db);
+    return sqlsrv_close($db);
 }
-
-// To pretend an error occurred
-function ooops( $opid )
-{
-	global $PWR;
-
-	close_mydb($db);
-	mssql_select_db($PWR->dbname,$db);
-    $errmsg = 'Ooops '.$opid.' no DB connection -- '.mssql_get_last_message();
-    return $errmsg;
-}
-
 
 function update_transcript( $arr_peoplegrades, $ubound
                           , $acad_year, $acad_term, $event_id, $section
@@ -57,7 +46,7 @@ function update_transcript( $arr_peoplegrades, $ubound
              . "   AND academic_term = '$acad_term'"
              . "   AND event_id      = '$event_id'"
              . "   AND section       = '$section'"
-			 . "   AND FINAL_GRADE not in ('W','WP','WF')"
+             . "   AND FINAL_GRADE not in ('W','WP','WF')"
              . "   AND people_id     = (SELECT pe.People_ID"
              . "                          FROM People pe LEFT JOIN"
              . "                               UserDefinedInd ud ON pe.People_ID = ud.People_ID"
@@ -65,8 +54,14 @@ function update_transcript( $arr_peoplegrades, $ubound
              . "                            OR ud.AD_User_ID = '$people_id'"
              . "                       )";
 
-        if (!mssql_query($sql, $db)) {
-            $errmsg .= "<br>Error occured while updating $people_id with final grade '$final_grade' : MsgRet: ".mssql_get_last_message();
+        if (!sqlsrv_query($db, $sql)) {
+            $errmsg .= "<br>Error occured while updating $people_id with final grade '$final_grade' : ";
+            $errors = sqlsrv_errors(SQLSRV_ERR_ERRORS);
+            foreach ($errors as $err)
+            {
+                $errmsg += "MsgRet: (".$err['code'].") ".$err['message'];
+            }
+
         }
     }
 
