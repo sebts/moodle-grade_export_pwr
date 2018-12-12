@@ -29,7 +29,7 @@ class grade_export_pwr extends grade_export {
      * @param string $itemlist comma separated list of item ids, empty means all
      */
     public function __construct($course, $itemlist='-1') {
-        parent::__construct($course, 0, $itemlist, false, false, GRADE_DISPLAY_TYPE_LETTER, NULL, false, false);
+        parent::__construct($course, 0, $itemlist, false, false, GRADE_DISPLAY_TYPE_LETTER, NULL, true, false);
         
         foreach ($this->grade_items as $itemid=>$item) {
             if ($item->itemtype == 'course') {
