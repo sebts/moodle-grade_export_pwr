@@ -71,9 +71,9 @@ class grade_export_pwr extends grade_export {
         }
         
         echo '<br /><font color=red>
-                Be sure you have disabled the "Aggregate only non-empty grades" setting under Categories and Items, Full View.
-              </font><br />
-                To understand why this setting is important to your grade calculations, <a href="http://youtu.be/9d2Kvf1JEAE" target=_new>see the tutorial</a>';
+                The letter grade show below for each student will be written to PowerCampus/Self-Service except for students who have already been given a withdrawal grade (WP/WF).<br />
+                Students who have a withdrawal grade for this class will be unaffected by this export.
+              </font><br />';
                 
         echo $OUTPUT->container_end();
     }
