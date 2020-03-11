@@ -36,7 +36,7 @@ function update_transcript( $arr_peoplegrades, $ubound
         $final_grade = $arr_peoplegrades[$i]['grade'];
 
         $sql = "UPDATE TranscriptDetail"
-             . "   SET final_grade = Upper(Replace('$final_grade',' ',''))"
+             . "   SET final_grade = Upper( CASE WHEN credit_type='PF' AND Replace('$final_grade',' ','') IN ('A+','A','A-','B+','B','B-','C+','C','C-','D+','D','D-') THEN 'P' ELSE Replace('$final_grade',' ','') END)"
              . "     , revision_date = '$rev_date'"
              . "     , revision_time = '$rev_time'"
              . "     , revision_opid = Replace('$opid','000','')"
