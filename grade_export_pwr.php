@@ -70,10 +70,20 @@ class grade_export_pwr extends grade_export {
             echo get_string('export', 'gradeexport_pwr').': ' . html_writer::link($link, $link);
         }
         
-        echo '<br /><font color=red>
+        echo '<p>
+			  <font color=red>
+				<br />
+				<b>NOTE:</b> The PowerCampus Grade Export function is only for exporting your <b>FINAL</b> gradebook at the end of the semester.<br />
+				<b>Using this function prior to setting up the Gradebook will result in wrong grades in PowerCampus.</b><br />
+				For more information, click Help and search on gradebook.
+              </font>
+			  <font color=blue>
+				<br /><br />
                 The letter grade show below for each student will be written to PowerCampus/Self-Service except for students who have already been given a withdrawal grade (WP/WF).<br />
                 Students who have a withdrawal grade for this class will be unaffected by this export.
-              </font><br />';
+              </font>
+			  <br />
+			  </p>';
                 
         echo $OUTPUT->container_end();
     }
@@ -141,7 +151,7 @@ class grade_export_pwr extends grade_export {
         $gui->init();
 
         while ($userdata = $gui->next_user()) {
-            $people_id = $userdata->user->username;
+            $people_id = $userdata->user->idnumber;
             $final_grade = $this->format_grade($userdata->grades[$this->coursetotalid]);
 
             //Convert an empty grade in Moodle ('-') to an empty string for PowerCampus
