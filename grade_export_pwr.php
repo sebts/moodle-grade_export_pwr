@@ -112,7 +112,7 @@ class grade_export_pwr extends grade_export {
         //be used to the update to PowerCampus as an audit trail
         //NOTE: Max len for OPID in PowerCampus is only 8 chars, however, $USER->username (Moodle logon id)
         //      can be 100 chars. Hence, the substr($USER->username,0,8).
-        $opid = strtoupper(substr($USER->username,0,8));
+        $opid = strtoupper(substr($USER->idnumber,0,8));
         $terminal = 'MDL1';
         $rev_date = date('m/d/Y');
         $rev_time = '1/1/1900 '.date('h:i:s A');   //MS SQL epoch is Jan. 1, 1900
